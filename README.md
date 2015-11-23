@@ -24,5 +24,5 @@ If the host does not answer, it will
 # Known Limitiations
 * the http_proxy and https_proxy settings only have an effect to the current shell, if the proxy command is sourced into the current shell
 * The docker https settings do not work on CoreOS (yet)
-* if host and port are omitted, then the hardcoded values host=172.28.12.5 and port=8080 will be used (can be changed in the detectAndSetProxy() function within the executable)
+* if host and port are omitted, then the hardcoded values host=172.28.12.5 and port=8080 will be used (those values can be changed in the detectAndSetProxy() function within the proxy shell script)
 
