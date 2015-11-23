@@ -1,0 +1,82 @@
+#!/bin/bash
+
+if [ $# -gt 2 ];
+then
+  echo $#
+  echo "error: usage: source proxy [<ip> [<port>]]"
+else
+  echo "note: usage: source proxy [<ip> [<port>]] for setting environment variables in the current shell"
+
+setproxy ()
+{
+  if [ $# != 1 ];
+  then
+    echo "usage: setproxy <proxy>"
+  else
+    export http_proxy=$__proxy && echo "http_proxy set to $__proxy"
+    export https_proxy=$__proxy && echo "https_proxy set to $__proxy"
+    setdockerproxy && sudo restart docker
+  fi
+}
+
+setdockerproxy()
+{
+  # sudo echo "export http_proxy=$__proxy" >> /etc/default/docker
+  # replaced by:
+  #echo "export http_proxy=$__proxy" | sudo tee -a /etc/default/docker > /dev/null
+  # see http://unix.stackexchange.com/questions/1416/redirecting-stdout-to-a-file-you-dont-have-write-permission-on
+
+  #which docker && uname -a | grep -i ubuntu && cleardockerproxy && echo "export http_proxy=$__proxy" | sudo tee -a /etc/default/docker && echo "export https_proxy=$__proxy" | sudo tee -a /etc/default/docker && sudo restart docker && echo docker restarted with proxy set to $__proxy
+  which docker > /dev/null && uname -a | grep -i -q ubuntu && cleardockerproxy -q && echo "export http_proxy=$__proxy" | sudo tee -a /etc/default/docker > /dev/null && echo "export https_proxy=$__proxy" | sudo tee -a /etc/default/docker > /dev/null && echo proxy $__proxy added to docker configuration
+  # not done: sudo restart docker
+}
+
+clearproxy()
+{
+  if [ $# != 0 ];
+  then
+    echo "usage: clearproxy"
+  else
+    unset http_proxy && echo "http_proxy cleared"
+    unset https_proxy && echo "https_proxy cleared"
+    cleardockerproxy && sudo restart docker
+  fi
+}
+
+cleardockerproxy()
+{
+  which docker > /dev/null && uname -a | grep -i -q ubuntu && [ -r /etc/default/docker ] && cat /etc/default/docker | awk '!/export http/' > /tmp/etc_default_docker && sudo cp /tmp/etc_default_docker /etc/default/docker
+returnval=$?
+  [ "_$1" != "_-q" ] && echo proxy removed from docker configuration
+  echo returnval=$returnval
+  return $returnval
+}
+
+testReachability()
+{
+  if [ $# != 1 ];
+  then
+    echo "usage: testReachability <ip>"
+  else
+    which ping | grep Windows && ping -n 1 -w 3 $1 || ping -c 1 -w 3 $__ip | grep '1 received'
+  fi
+}
+
+detectAndSetProxy()
+{
+  [ _$1 != _ ] && __ip=$1 || __ip=172.28.12.5
+  [ _$2 != _ ] && __port=$2 || __port=8080
+  __proxy=http://${__ip}:${__port}
+
+  testReachability $__ip
+  if [ $? -eq 0 ]; 
+  then
+    setproxy $__proxy 
+  else 
+    clearproxy
+  fi
+}
+
+detectAndSetProxy $1 $2
+unset detectAndSetProxy setproxy clearproxy __ip __port __proxy __success
+fi
