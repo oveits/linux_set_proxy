@@ -1,8 +1,15 @@
 # Linux Detect and Set Proxy
+## Installation
 
+> git clone https://github.com/oveits/linux_set_proxy
+
+> cd linux_set_proxy; sudo ./install.sh
+
+## Usage
 
 > usage: source proxy host port 
 
+## Result
 This program will test, whether the host (IP address or FQDN) answers to ping and set/reset the HTTP ptoxy settings like follows:
 
 If the host answers, it will
