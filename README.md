@@ -1,9 +1,10 @@
 # Linux Detect and Set Proxy
 ## Installation
 
-> git clone https://github.com/oveits/linux_set_proxy
-
-> cd linux_set_proxy; sudo ./install.sh
+```bash
+git clone https://github.com/oveits/linux_set_proxy
+cd linux_set_proxy; sudo ./install.sh
+```
 
 ## Usage
 
@@ -15,12 +16,16 @@ This program will test, whether the host (IP address or FQDN) answers to ping an
 If the host answers, it will
   1. set the variable http_proxy to http://host:port (export http_proxy=http://host:port)
   2. set the variable https_proxy to http://host:port (export https_proxy=http://host:port)
-  3. on Docker hosts, it will add following lines to the file /etc/defaults/docker and restart the docker service:
-
->
-     export http_proxy=http://host:port
-     export https_proxy=http://host:port
-
+  3. on Docker hosts, it will add following lines to the file /etc/defaults/docker 
+```bash
+  export http_proxy=http://host:port
+  export https_proxy=http://host:port
+```
+and restart the docker service:
+```bash
+  restart docker
+```     
+     
 If the host does not answer, it will
   1. clear the variable http_proxy
   2. clear the variable https_proxy
