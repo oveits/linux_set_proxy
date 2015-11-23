@@ -10,7 +10,9 @@ cd linux_set_proxy; sudo ./install.sh
 
 ## Usage
 
-> usage: source proxy host port 
+```bash
+usage: source proxy host port 
+```
 
 ## Result
 This program will test, whether the host (IP address or FQDN) answers to ping and set/reset the HTTP ptoxy settings like follows:
@@ -18,7 +20,7 @@ This program will test, whether the host (IP address or FQDN) answers to ping an
 If the host answers, it will
   1. set the variable http_proxy to http://host:port (export http_proxy=http://host:port)
   2. set the variable https_proxy to http://host:port (export https_proxy=http://host:port)
-  3. on Docker hosts, it will add following lines to the file /etc/defaults/docker 
+  3. on Docker hosts, it will append following lines to the file /etc/defaults/docker (if not already present): 
 ```bash
   export http_proxy=http://host:port
   export https_proxy=http://host:port
