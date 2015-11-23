@@ -1,4 +1,6 @@
-# Linux Detect and Set Proxy
+# Linux: Detection of Availability of HTTP Proxy
+Use case: as a road warrior, you often change your network environment from situations with HTTP proxy to situations without HTTP proxy and vice versa and you need an easy way to reconfigure the proxy settings of your machine, virtual machines and/or docker containers.
+
 ## Installation
 
 ```bash
