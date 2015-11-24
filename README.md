@@ -50,4 +50,5 @@ If the HTTP proxy host does not answer, it will
 
 ## Known Limitiations
 * The docker https settings do not work on CoreOS (yet)
+* sudo capabilities are required
 
