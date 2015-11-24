@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# testing single proxy:
+# example with single proxy:
 alias p="source proxy proxy1.example.com 81"
 
-# testing among 3 proxies:
+# example with three proxies:
 #alias p="source proxy proxy1.example.com 81 || source proxy 10.1.1.1 8080 || source proxy proxy3.example.com 81"
