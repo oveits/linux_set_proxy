@@ -50,5 +50,6 @@ If the HTTP proxy host does not answer, it will
 
 ## Known Limitiations
 * The docker https settings do not work on CoreOS (yet)
-* sudo capabilities are required
+* Apart from Cygwin/Mingw systems, sudo capabilities are required for the installation script
+* For Docker hosts, sudo capabilities are required for changing the /etc/default/docker file and for restarting the docker service
 
