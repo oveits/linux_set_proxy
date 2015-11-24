@@ -48,7 +48,6 @@ cleardockerproxy()
   which docker > /dev/null && uname -a | grep -i -q ubuntu && [ -r /etc/default/docker ] && cat /etc/default/docker | awk '!/export http/' > /tmp/etc_default_docker && sudo cp /tmp/etc_default_docker /etc/default/docker
 returnval=$?
   [ "_$1" != "_-q" ] && echo proxy removed from docker configuration
-  echo returnval=$returnval
   return $returnval
 }
 
@@ -74,9 +73,12 @@ detectAndSetProxy()
     setproxy $__proxy 
   else 
     clearproxy
+    return 1
   fi
 }
 
 detectAndSetProxy $1 $2
+returnval=$?
 unset detectAndSetProxy setproxy clearproxy __ip __port __proxy __success
+return $returnval
 fi
